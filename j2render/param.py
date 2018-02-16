@@ -100,13 +100,13 @@ class ParamTree():
             '{target}/_global',
         ],
         'resource': [
-            'default/{resource}/_common',
+            '_default/{resource}/_common',
             '{target}/{resource}/_common',
         ],
         'item': [
-            'default/{resource}/_common',
+            '_default/{resource}/_common',
             '{target}/{resource}/_common',
-            'default/{resource}/{item}',
+            '_default/{resource}/{item}',
             '{target}/{resource}/{item}',
         ],
     }
