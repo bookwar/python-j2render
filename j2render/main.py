@@ -25,7 +25,9 @@ def write_file(filepath, data):
 def configure():
 
     parser = argparse.ArgumentParser(
-        description='Render resource templates with items',
+        description='Render resource templates for target with parameters defined by item',
+        epilog='Example: $ j2render -T prod -R my_resource -I my_item',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
     parser.add_argument('-v', '--verbose', action='store_true',
@@ -38,18 +40,18 @@ def configure():
     parser.add_argument('-t', '--targets', default='targets',
                         help='path to targets')
     parser.add_argument('-T', '--target',
-                        help='resource to render')
+                        help='target to which we render the resource')
     parser.add_argument('-R', '--resource',
                         help='resource to render')
     parser.add_argument('-I', '--item',
-                        help='name of the item file')
+                        help='item to render')
 
     args = parser.parse_args()
 
     return args
 
 
-if __name__ == "__main__":
+def main():
 
     args = configure()
 
@@ -71,3 +73,8 @@ if __name__ == "__main__":
         filepath = os.path.join(args.output, filename)
         logging.debug("Writing {0}".format(filepath))
         write_file(filepath, data)
+
+
+if __name__ == "__main__":
+
+    main()

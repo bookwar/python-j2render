@@ -11,6 +11,7 @@ def set_nested_value(dictionary, keys, value):
         d = d.setdefault(key, {})
     d.update(value)
 
+
 def get_nested_value(dictionary, keys):
     '''Get nested value from the dictionary
 
@@ -25,13 +26,13 @@ def get_nested_value(dictionary, keys):
 
     return d
 
+
 def read_yaml_tree(path):
     '''Read YAML from a directory tree
 
-    For each subdirectory create a key in the dictionary.
-    For each .yaml file in the directory,
-    if its name starts with the digit - add YAML data from file to the subdirectory key,
-    else add filename as a key, and then add YAML data from file under this key.
+    For each subdirectory create a key in the dictionary.  For each .yaml file in the directory, if its name starts with
+    the digit - add YAML data from file to the subdirectory key, else add filename as a key, and then add YAML data from
+    file under this key.
 
     Example:
 
@@ -65,7 +66,9 @@ def read_yaml_tree(path):
             logging.debug("Parsing {0}".format(filename))
 
             if not filename.endswith(".yaml"):
-                logging.warning("Skipped {0} because it doesn't end with .yaml".format(filename))
+                logging.warning(
+                    "Skipped {0} because it doesn't end with .yaml".format(filename)
+                )
                 continue
 
             with open(os.path.join(curdir, filename)) as fd:
@@ -137,21 +140,3 @@ class ParamTree():
 
     def get_item_params(self, target, resource, item):
         return self._get_params(scope='item', target=target, resource=resource, item=item)
-
-    def get_resources(self, target=None, targets=None):
-        '''List all resources mentioned in the parameter tree'''
-        if target:
-            targets = [target]
-
-        if not targets:
-            # If target is not specified - read all
-            targets = self.targets
-
-        resources = []
-        for target in targets:
-            resources += [item for item in self.raw[target].keys() if not item.startswith("_")]
-
-        if '_default' in self.raw.keys():
-            resources += [item for item in self.raw["_default"].keys() if not item.startswith("_")]
-
-        return resources

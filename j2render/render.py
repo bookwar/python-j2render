@@ -13,13 +13,13 @@ class Render():
         self.resources_path = resources_path
         self.params_path = params_path
 
-        self.resources = next(os.walk(self.resources_path))[1]
+        self.resources = os.listdir(self.resources_path)
         self.param_tree = ParamTree(fileroot=self.params_path)
 
         self.system_params = os.environ
 
     def render_item(self, target, resource, item, **kwargs):
-        if not resource in self.resources:
+        if resource not in self.resources:
             logging.error("No resource {0}".format(resource))
             return None
 
@@ -53,6 +53,3 @@ class Render():
             rendered_data.append((output_filename, output_data))
 
         return rendered_data
-
-            
-
